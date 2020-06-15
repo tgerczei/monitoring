@@ -1,0 +1,17 @@
+# /lib/systemd/system/monitoring.service
+[Unit]
+Description=Monitoring Stack Docker Compose Application
+Requires=docker.service
+After=docker.service
+
+[Service]
+User=pirate
+Type=oneshot
+RemainAfterExit=yes
+WorkingDirectory=/home/pirate/monitoring
+ExecStart=/usr/local/bin/docker-compose up -d
+ExecStop=/usr/local/bin/docker-compose down
+TimeoutStartSec=0
+
+[Install]
+WantedBy=multi-user.target

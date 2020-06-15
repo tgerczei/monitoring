@@ -1,0 +1,28 @@
+---
+version: '2.1'
+volumes:
+  tsdb:
+    name: prometheus-tsdb
+  config:
+    name: grafana-config
+  data:
+    name: grafana-data
+services:
+  prometheus:
+    container_name: prometheus
+    hostname: prometheus
+    image: prom/prometheus
+    ports:
+      - 9090:9090
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - tsdb:/prometheus:rw
+  grafana:
+    container_name: grafana
+    hostname: grafana
+    image: grafana/grafana
+    ports:
+      - 3000:3000
+    volumes:
+      - config:/etc/grafana:rw
+      - data:/var/lib/grafana:rw
